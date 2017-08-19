@@ -64,8 +64,12 @@ inquirer.prompt(
                connection.query("SELECT * FROM products WHERE ?", {item_id: chosenItem}, function(err, res){
                 if (err) throw (err);
                 if (res[0].stock_quantity >= answer.quantity) {
-                  console.log("It looks like we have plenty.");
+                  console.log(colors.blue("It looks like we have plenty."));
                   console.log(colors.green("Your total is " + "$" + parseInt(answer.quantity)*parseInt(res[0].price) + "!"));
+                  //prompt.confirm yes or no to proceed with order, subtract from stock quantity
+                } else {
+                  console.log(colors.red("Sorry, we don't have enough! We only have " + res[0].stock_quantity + "." + " Would you like to buy " + res[0].stock_quantity + "?"));
+                //prompt.confirm, yes/no. yes subtract from stock quantity
                 }
                })
              
